@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Tenso by avoidwork</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Tenso</h1>
+        <p>Tensō is a REST framework for node.js</p>
+
+        <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/avoidwork/tenso/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/avoidwork/tenso/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/avoidwork/tenso">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="tens%C5%8D" class="anchor" href="#tens%C5%8D"><span class="octicon octicon-link"></span></a>Tensō</h1>
+
+<p>Tensō is a REST framework for node.js, designed to simplify the implementation of APIs.</p>
+
+<h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>Creating an API with Tensō is as simple as three statements.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="s2">"use strict"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">tenso</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">),</span>
+    <span class="nx">app</span>   <span class="o">=</span> <span class="nx">tenso</span><span class="p">(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="s2">"routes.js"</span><span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="creating-routes" class="anchor" href="#creating-routes"><span class="octicon octicon-link"></span></a>Creating Routes</h2>
+
+<p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server. The following example will create GET routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a random number at <code>/random</code>.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">random</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"keigai"</span> <span class="p">).</span><span class="nx">util</span><span class="p">.</span><span class="nx">number</span><span class="p">.</span><span class="nx">random</span><span class="p">,</span>
+    <span class="nx">prepare</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">).</span><span class="nx">prepare</span><span class="p">;</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">get</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"/"</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s2">"/reports/tps"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">prepare</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span> <span class="s2">"TPS Cover Sheet not attached"</span> <span class="p">),</span> <span class="mi">785</span> <span class="p">),</span> <span class="mi">785</span> <span class="p">);</span>
+    <span class="p">},</span>
+    <span class="s2">"/random"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">prepare</span><span class="p">(</span> <span class="nx">random</span><span class="p">()</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling is as easy as providing file paths for the two keys.</p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span>
+    <span class="nt">"pageSize"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nt">"port"</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
+    <span class="nt">"routes"</span><span class="p">:</span> <span class="s2">"routes.js"</span><span class="p">,</span>
+    <span class="nt">"log"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"dtrace"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">"syslog"</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">},</span>
+    <span class="nt">"ssl"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"key"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"cert"</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2014 Jason Mulligan<br>
+Licensed under the BSD-3 license.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/avoidwork">avoidwork</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
