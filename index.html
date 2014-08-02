@@ -31,7 +31,7 @@
         <h1>
 <a name="tens%C5%8D" class="anchor" href="#tens%C5%8D"><span class="octicon octicon-link"></span></a>Tensō</h1>
 
-<p>Tensō is a REST framework for node.js, designed to simplify the implementation of APIs.</p>
+<p>Tensō is a REST API facade for node.js, designed to simplify the implementation of APIs.</p>
 
 <h2>
 <a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
@@ -66,6 +66,25 @@
 </pre></div>
 
 <h2>
+<a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
+
+<p>Responses will have a standard shape. Hypermedia (pagination, links, etc.) will be in <code>data</code> as <code>link:[ {"uri": "...", "rel": "..."}, ...]</code>. Pagination will also be present via the <code>Link</code> HTTP header.</p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">the</span> <span class="err">response</span> <span class="p">}}</span><span class="err">,</span>
+  <span class="s2">"error"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">an</span> <span class="err">`Error`</span> <span class="err">stack</span> <span class="err">trace</span> <span class="err">/</span> <span class="err">message</span> <span class="p">}</span><span class="err">},</span>
+  <span class="s2">"status"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">HTTP</span> <span class="err">status</span> <span class="err">code</span> <span class="p">}</span><span class="err">}</span>
+<span class="err">}</span>
+</pre></div>
+
+<h2>
+<a name="rest--hypermedia" class="anchor" href="#rest--hypermedia"><span class="octicon octicon-link"></span></a>REST / Hypermedia</h2>
+
+<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richard Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
+relationships, and create the appropriate Objects in the <code>link</code> Array, as well as the <code>Link</code> HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered
+hypermedia links.</p>
+
+<h2>
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
@@ -97,7 +116,7 @@
 <h2>
 <a name="dtrace" class="anchor" href="#dtrace"><span class="octicon octicon-link"></span></a>Dtrace</h2>
 
-<p>Dtrace probes are can be enabled by configuration (disabled by default), and can be observed as <code>turtle-io</code>; Tensō is built on <code>turtle.io</code>.</p>
+<p>Dtrace probes can be enabled by configuration (disabled by default), and can be observed as <code>turtle-io</code>; Tensō is built on <code>turtle.io</code>.</p>
 
 <pre><code>"allowed",        "char *", "char *", "char *", "int"
 "allows",         "char *", "char *", "int"
@@ -113,18 +132,6 @@
 "status",         "int", "int", "int", "int", "int"
 "write",          "char *", "char *", "char *", "char *", "int"
 </code></pre>
-
-<h2>
-<a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
-
-<p>Responses will have a standard shape. Hypermedia (pagination, links, etc.) will be in <code>data</code> as <code>link:[ {"uri": "...", "rel": "..."}, ...]</code>. Pagination will also be present via the <code>Link</code> header.</p>
-
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">the</span> <span class="err">response</span> <span class="p">}}</span><span class="err">,</span>
-  <span class="s2">"error"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">an</span> <span class="err">`Error`</span> <span class="err">stack</span> <span class="err">trace</span> <span class="err">/</span> <span class="err">message</span> <span class="p">}</span><span class="err">},</span>
-  <span class="s2">"status"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">HTTP</span> <span class="err">status</span> <span class="err">code</span> <span class="p">}</span><span class="err">}</span>
-<span class="err">}</span>
-</pre></div>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
