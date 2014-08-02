@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -71,7 +70,8 @@
 <h2>
 <a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
 
-<p>Responses will have a standard shape. Hypermedia (pagination, links, etc.) will be in <code>data</code> as <code>link:[ {"uri": "...", "rel": "..."}, ...]</code>. Pagination will also be present via the <code>Link</code> HTTP header.</p>
+<p>Responses will have a standard shape. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.
+The result will be in <code>data.result</code>.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
   <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">the</span> <span class="err">response</span> <span class="p">}}</span><span class="err">,</span>
@@ -86,6 +86,8 @@
 <p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richard Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
 relationships, and create the appropriate Objects in the <code>link</code> Array, as well as the <code>Link</code> HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered
 hypermedia links.</p>
+
+<p>For example, if the key <code>user_id</code> where found, it would be mapped to <code>/users/:id</code> with a link <code>rel</code> of <code>alternative</code>.</p>
 
 <h2>
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
