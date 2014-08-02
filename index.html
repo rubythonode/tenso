@@ -71,16 +71,18 @@
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span>
-    <span class="nt">"port"</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
-    <span class="nt">"routes"</span><span class="p">:</span> <span class="err">require(</span> <span class="s2">"./routes.js"</span> <span class="err">)</span><span class="p">,</span>
-    <span class="nt">"logs"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">]</span> <span class="err">or</span> <span class="p">{</span><span class="nt">"realm"</span><span class="p">:</span> <span class="s2">"Super Secret"</span><span class="p">,</span> <span class="nt">"list"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">]}</span> <span class="err">//</span> <span class="err">Optional</span> 
+    <span class="s2">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">'localhost'</span> <span class="err">*/</span>
+    <span class="nt">"port"</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">8000</span> <span class="err">*/</span>
+    <span class="nt">"uid"</span><span class="p">:</span> <span class="err">N</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">system</span> <span class="err">account</span> <span class="err">uid</span> <span class="err">to</span> <span class="err">drop</span> <span class="err">to</span> <span class="err">after</span> <span class="err">starting</span> <span class="err">with</span> <span class="err">elevated</span> <span class="err">privileges</span> <span class="err">to</span> <span class="err">run</span> <span class="err">on</span> <span class="err">a</span> <span class="err">low</span> <span class="err">port</span> <span class="err">*/</span>
+    <span class="nt">"routes"</span><span class="p">:</span> <span class="err">require(</span> <span class="s2">"./routes.js"</span> <span class="err">)</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Required!</span> <span class="err">*/</span>
+    <span class="nt">"logs"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">Optional</span> <span class="err">*/</span>
         <span class="nt">"level"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">,</span>
         <span class="nt">"stdout"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
         <span class="nt">"dtrace"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
         <span class="nt">"syslog"</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">},</span>
-    <span class="nt">"ssl"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"ssl"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">Optional</span> <span class="err">*/</span>
         <span class="nt">"key"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="nt">"cert"</span><span class="p">:</span> <span class="kc">null</span>
     <span class="p">}</span>
