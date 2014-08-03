@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -70,6 +69,11 @@
 <span class="p">}</span>
 </pre></div>
 
+<h3>
+<a name="request-helpers" class="anchor" href="#request-helpers"><span class="octicon octicon-link"></span></a>Request Helpers</h3>
+
+<p>Tensō decorates <code>req</code> with "helpers" such as <code>req.ip</code>, &amp; <code>req.parsed</code>. Cookies are available at <code>req.cookies{}</code>. Sessions are available at <code>req.sessions{}</code>. <code>PATCH</code>, <code>PUT</code>, or <code>POST</code> payloads are available as <code>req.body</code>.</p>
+
 <h2>
 <a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
 
@@ -107,8 +111,8 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">]</span> <span class="err">or</span> <span class="p">{</span><span class="nt">"realm"</span><span class="p">:</span> <span class="s2">"Super Secret"</span><span class="p">,</span> <span class="nt">"list"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">]}</span> <span class="err">/*</span> <span class="err">Optional</span> <span class="err">*/</span>
-    <span class="s2">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">'localhost'</span> <span class="err">*/</span>
+    <span class="nt">"auth"</span><span class="p">:</span> <span class="err">/*</span> <span class="err">Optional</span><span class="p">,</span> <span class="err">see</span> <span class="err">Authentication</span> <span class="err">section</span> <span class="err">*/</span> 
+    <span class="nt">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">'localhost'</span> <span class="err">*/</span>
     <span class="nt">"port"</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">8000</span> <span class="err">*/</span>
     <span class="nt">"uid"</span><span class="p">:</span> <span class="err">N</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">system</span> <span class="err">account</span> <span class="err">uid</span> <span class="err">to</span> <span class="err">drop</span> <span class="err">to</span> <span class="err">after</span> <span class="err">starting</span> <span class="err">with</span> <span class="err">elevated</span> <span class="err">privileges</span> <span class="err">to</span> <span class="err">run</span> <span class="err">on</span> <span class="err">a</span> <span class="err">low</span> <span class="err">port</span> <span class="err">*/</span>
     <span class="nt">"routes"</span><span class="p">:</span> <span class="err">require(</span> <span class="s2">"./routes.js"</span> <span class="err">)</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Required!</span> <span class="err">*/</span>
@@ -126,6 +130,41 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </pre></div>
 
 <h2>
+<a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h2>
+
+<p>Planned authentication options are <code>Basic Auth</code>, <code>Bearer Token</code>, <code>OAuth2 (generic)</code>, <code>Twitter</code>, &amp; <code>Facebook</code>.</p>
+
+<h3>
+<a name="basic-auth" class="anchor" href="#basic-auth"><span class="octicon octicon-link"></span></a>Basic Auth</h3>
+
+<p><code>Basic Auth</code> will be applied to the entire API if enabled.</p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"basic"</span><span class="p">,</span>
+        <span class="nt">"list"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">],</span>
+        <span class="nt">"realm"</span><span class="p">:</span> <span class="s2">"Private"</span> <span class="err">//</span> <span class="err">`realm`</span> <span class="err">is</span> <span class="err">optional</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="bearer-token" class="anchor" href="#bearer-token"><span class="octicon octicon-link"></span></a>Bearer Token</h3>
+
+<p>The <code>protect</code> Array is the folder paths (regex supported) that will be protected by <code>Bearer Tokens</code>.</p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"bearer"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">"enabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nt">"tokens"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"abc"</span><span class="p">,</span> <span class="err">...</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">"protect"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
 <a name="logging" class="anchor" href="#logging"><span class="octicon octicon-link"></span></a>Logging</h2>
 
 <p>Standard log levels are supported, and are emitted (by configuration) to <code>stdout</code> &amp; <code>stderr</code>, &amp; <code>syslog</code>.</p>
@@ -133,7 +172,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <h2>
 <a name="dtrace" class="anchor" href="#dtrace"><span class="octicon octicon-link"></span></a>Dtrace</h2>
 
-<p>Dtrace probes can be enabled by configuration (disabled by default), and can be observed as <code>turtle-io</code>; Tensō is built on <code>turtle.io</code>.</p>
+<p>Dtrace probes can be enabled by configuration (disabled by default), and can be observed as <code>turtle-io</code>; Tensō is built on <a href="https://github.com/avoidwork/turtle.io">turtle.io</a>.</p>
 
 <pre><code>"allowed",        "char *", "char *", "char *", "int"
 "allows",         "char *", "char *", "int"
