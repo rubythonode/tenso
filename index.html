@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -44,8 +43,9 @@
 <p>Creating an API with Tensō is as simple as three statements.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">tenso</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">),</span>
-    <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span>
-    <span class="nx">app</span>    <span class="o">=</span> <span class="nx">tenso</span><span class="p">(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="nx">routes</span><span class="p">}</span> <span class="p">);</span>
+    <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">);</span>
+
+<span class="nx">tenso</span><span class="p">(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="nx">routes</span><span class="p">}</span> <span class="p">);</span>
 </pre></div>
 
 <h3>
@@ -82,7 +82,7 @@
 The result will be in <code>data.result</code>.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
-  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">the</span> <span class="err">response</span> <span class="p">}}</span><span class="err">,</span>
+  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">`{link:</span> <span class="err">[],</span> <span class="err">result:</span> <span class="err">?</span><span class="p">}</span><span class="err">`</span> <span class="p">}</span><span class="err">},</span>
   <span class="s2">"error"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">an</span> <span class="err">`Error`</span> <span class="err">stack</span> <span class="err">trace</span> <span class="err">/</span> <span class="err">message</span> <span class="p">}</span><span class="err">},</span>
   <span class="s2">"status"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">HTTP</span> <span class="err">status</span> <span class="err">code</span> <span class="p">}</span><span class="err">}</span>
 <span class="err">}</span>
@@ -133,7 +133,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <h2>
 <a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h2>
 
-<p>Planned authentication options are <code>Basic Auth</code>, <code>Bearer Token</code>, <code>OAuth2 (generic)</code>, <code>Twitter</code>, &amp; <code>Facebook</code>.</p>
+<p>Planned authentication options are <code>Basic Auth</code>, <code>OAuth2 Bearer Token</code>, <code>Twitter</code>, &amp; <code>Facebook</code>.</p>
 
 <h3>
 <a name="basic-auth" class="anchor" href="#basic-auth"><span class="octicon octicon-link"></span></a>Basic Auth</h3>
@@ -152,9 +152,9 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </pre></div>
 
 <h3>
-<a name="bearer-token" class="anchor" href="#bearer-token"><span class="octicon octicon-link"></span></a>Bearer Token</h3>
+<a name="oauth2-bearer-token" class="anchor" href="#oauth2-bearer-token"><span class="octicon octicon-link"></span></a>Oauth2 Bearer Token</h3>
 
-<p>The <code>protect</code> Array is the folder paths (regex supported) that will be protected by <code>Bearer Tokens</code>.</p>
+<p>The <code>protect</code> Array is the endpoints that will be protected by <code>OAuth2 Bearer Tokens</code>.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
     <span class="nt">"auth"</span><span class="p">:</span> <span class="p">{</span>
