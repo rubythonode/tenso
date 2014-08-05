@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -112,21 +111,21 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
 
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"auth"</span><span class="p">:</span> <span class="err">/*</span> <span class="err">Optional</span><span class="p">,</span> <span class="err">see</span> <span class="err">Authentication</span> <span class="err">section</span> <span class="err">*/</span> 
-    <span class="nt">"hostname"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">'localhost'</span> <span class="err">*/</span>
-    <span class="nt">"port"</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">default</span> <span class="err">is</span> <span class="err">8000</span> <span class="err">*/</span>
-    <span class="nt">"uid"</span><span class="p">:</span> <span class="err">N</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Optional,</span> <span class="err">system</span> <span class="err">account</span> <span class="err">uid</span> <span class="err">to</span> <span class="err">drop</span> <span class="err">to</span> <span class="err">after</span> <span class="err">starting</span> <span class="err">with</span> <span class="err">elevated</span> <span class="err">privileges</span> <span class="err">to</span> <span class="err">run</span> <span class="err">on</span> <span class="err">a</span> <span class="err">low</span> <span class="err">port</span> <span class="err">*/</span>
-    <span class="nt">"routes"</span><span class="p">:</span> <span class="err">require(</span> <span class="s2">"./routes.js"</span> <span class="err">)</span><span class="p">,</span> <span class="err">/*</span> <span class="err">Required!</span> <span class="err">*/</span>
-    <span class="nt">"logs"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">Optional</span> <span class="err">*/</span>
-        <span class="nt">"level"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">,</span>
-        <span class="nt">"stdout"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nt">"dtrace"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nt">"syslog"</span><span class="p">:</span> <span class="kc">false</span>
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="cm">/* Optional, see Authentication section */</span> 
+    <span class="s2">"hostname"</span><span class="o">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="cm">/* Optional, default is 'localhost' */</span>
+    <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="cm">/* Optional, default is 8000 */</span>
+    <span class="s2">"uid"</span><span class="o">:</span> <span class="nx">N</span><span class="p">,</span> <span class="cm">/* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */</span>
+    <span class="s2">"routes"</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span> <span class="cm">/* Required! */</span>
+    <span class="s2">"logs"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
+        <span class="s2">"level"</span><span class="o">:</span> <span class="s2">"info"</span><span class="p">,</span>
+        <span class="s2">"stdout"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s2">"dtrace"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="s2">"syslog"</span><span class="o">:</span> <span class="kc">false</span>
     <span class="p">},</span>
-    <span class="nt">"ssl"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">Optional</span> <span class="err">*/</span>
-        <span class="nt">"key"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="nt">"cert"</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="s2">"ssl"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
+        <span class="s2">"key"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="s2">"cert"</span><span class="o">:</span> <span class="kc">null</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -141,12 +140,12 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 
 <p><code>Basic Auth</code> will be applied to the entire API if enabled.</p>
 
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"basic"</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">"enabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nt">"list"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="err">...</span><span class="p">],</span>
-            <span class="nt">"realm"</span><span class="p">:</span> <span class="s2">"Private"</span> <span class="err">//</span> <span class="err">`realm`</span> <span class="err">is</span> <span class="err">optional</span>
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"basic"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"list"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="p">...],</span>
+            <span class="s2">"realm"</span><span class="o">:</span> <span class="s2">"Private"</span> <span class="c1">// `realm` is optional</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -157,13 +156,58 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 
 <p>The <code>protect</code> Array is the endpoints that will be protected by <code>OAuth2 Bearer Tokens</code>.</p>
 
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"auth"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"bearer"</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">"enabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nt">"tokens"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"abc"</span><span class="p">,</span> <span class="err">...</span><span class="p">]</span>
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"bearer"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"tokens"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"abc"</span><span class="p">,</span> <span class="p">...]</span>
         <span class="p">},</span>
-        <span class="nt">"protect"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="local" class="anchor" href="#local"><span class="octicon octicon-link"></span></a>Local</h3>
+
+<p>The <code>protect</code> Array is the endpoints that will be protected by <code>local</code> authentication. Do not protect <code>/</code>, as it'll block the authentication end points.</p>
+
+<p><code>local</code> authentication will rely on sessions, so SSL is required for production servers.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">local</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">enabled</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">auth</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                    <span class="p">}</span>
+
+                    <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="s2">"/stuff"</span> <span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="s2">"Unauthorized"</span> <span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nx">middleware</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">next</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span> <span class="s2">"/login"</span> <span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nx">login</span><span class="o">:</span> <span class="s2">"/login"</span>
+        <span class="p">}</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/stuff"</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
