@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -226,6 +225,16 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
         <span class="s2">"status"</span><span class="o">:</span> <span class="mi">429</span><span class="p">,</span> <span class="cm">/* Optional HTTP status */</span>
         <span class="s2">"message"</span><span class="o">:</span> <span class="s2">"Too many requests"</span>  <span class="cm">/* Optional error message */</span>
     <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="limiting-upload-size" class="anchor" href="#limiting-upload-size"><span class="octicon octicon-link"></span></a>Limiting upload size</h2>
+
+<p>A 'max byte' limit can be enforced on all routes that handle <code>PATCH</code>, <code>POST</code>, &amp; <code>PUT</code> requests. The default limit is 1 MB (1048576 b).</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"maxBytes"</span><span class="o">:</span> <span class="mi">5242880</span>
 <span class="p">}</span>
 </pre></div>
 
