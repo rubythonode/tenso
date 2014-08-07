@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -79,7 +78,7 @@
 <h2>
 <a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
 
-<p>Responses will have a standard shape. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.
+<p>Responses will have a standard shape, and be utf-8 by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.
 The result will be in <code>data.result</code>.</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
@@ -113,21 +112,25 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="cm">/* Optional, see Authentication section */</span> 
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="cm">/* Optional, see Authentication section */</span>
+    <span class="s2">"cache"</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="cm">/* Optional, size of Etag LRU cache */</span>
+    <span class="s2">"compress"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="cm">/* Optional, enabled by default, disabled with SSL */</span>
+    <span class="s2">"headers"</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Optional, custom headers */</span>
     <span class="s2">"hostname"</span><span class="o">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="cm">/* Optional, default is 'localhost' */</span>
-    <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="cm">/* Optional, default is 8000 */</span>
-    <span class="s2">"uid"</span><span class="o">:</span> <span class="nx">N</span><span class="p">,</span> <span class="cm">/* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */</span>
-    <span class="s2">"routes"</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span> <span class="cm">/* Required! */</span>
+    <span class="s2">"json"</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="cm">/* Optional, default indent for 'pretty' JSON */</span>
     <span class="s2">"logs"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
         <span class="s2">"level"</span><span class="o">:</span> <span class="s2">"info"</span><span class="p">,</span>
         <span class="s2">"stdout"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
         <span class="s2">"dtrace"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
         <span class="s2">"syslog"</span><span class="o">:</span> <span class="kc">false</span>
     <span class="p">},</span>
+    <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="cm">/* Optional, default is 8000 */</span>
+    <span class="s2">"routes"</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span> <span class="cm">/* Required! */</span>
     <span class="s2">"ssl"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
         <span class="s2">"key"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="s2">"cert"</span><span class="o">:</span> <span class="kc">null</span>
-    <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">"uid"</span><span class="o">:</span> <span class="nx">N</span> <span class="cm">/* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -212,6 +215,11 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+
+<h2>
+<a name="compression" class="anchor" href="#compression"><span class="octicon octicon-link"></span></a>Compression</h2>
+
+<p>Compression is enabled by default, for Clients that support <code>gzip</code> or <code>deflate</code>. Compression will be disabled if <code>SSL</code> is enabled.</p>
 
 <h2>
 <a name="rate-limiting" class="anchor" href="#rate-limiting"><span class="octicon octicon-link"></span></a>Rate Limiting</h2>
