@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -41,12 +40,9 @@
 <h2>
 <a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<p>Creating an API with Tensō is as simple as three statements.</p>
+<p>Creating an API with Tensō can be as simple as one statement.</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">tenso</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">),</span>
-    <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">);</span>
-
-<span class="nx">tenso</span><span class="p">(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="nx">routes</span><span class="p">}</span> <span class="p">);</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">)(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s2">"/routes.js"</span> <span class="p">)}</span> <span class="p">);</span>
 </pre></div>
 
 <h3>
@@ -98,6 +94,8 @@ hypermedia links.</p>
 
 <p>For example, if the key <code>user_id</code> was found, it would be mapped to <code>/users/:id</code> with a link <code>rel</code> of <code>related</code>.</p>
 
+<p>Tensō will bend the rules of REST when using authentication strategies provided by passport.js, which rely on a session. Session storage is in memory, or Redis. You have the option of a stateless or stateful API.</p>
+
 <h2>
 <a name="cache" class="anchor" href="#cache"><span class="octicon octicon-link"></span></a>Cache</h2>
 
@@ -138,28 +136,95 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <h2>
 <a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h2>
 
-<p>Planned authentication options include <code>OAuth2 (generic)</code>, <code>Twitter</code>, &amp; <code>Facebook</code>.</p>
+<p>The <code>protect</code> Array is the endpoints that will require authentication. Sessions are used for non <code>Basic</code> or <code>Bearer Token</code> authentication, and will have <code>/login</code>, <code>/logout</code>, &amp; custom routes. Redis is supported for session storage.</p>
 
 <h3>
 <a name="basic-auth" class="anchor" href="#basic-auth"><span class="octicon octicon-link"></span></a>Basic Auth</h3>
-
-<p><code>Basic Auth</code> will be applied to the entire API if enabled.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="p">{</span>
     <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">"basic"</span><span class="o">:</span> <span class="p">{</span>
             <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
             <span class="s2">"list"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="p">...],</span>
-            <span class="s2">"realm"</span><span class="o">:</span> <span class="s2">"Private"</span> <span class="c1">// `realm` is optional</span>
+        <span class="p">},</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="facebook" class="anchor" href="#facebook"><span class="octicon octicon-link"></span></a>Facebook</h3>
+
+<p>Facebook authentication will create <code>/auth</code>, <code>/auth/facebook</code>, &amp; <code>/auth/facebook/callback</code> routes. <code>auth(accessToken, refreshToken, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"facebook"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
+            <span class="s2">"client_id"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from Facebook */</span>
+            <span class="s2">"client_secret"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Get this from Facebook */</span>
+        <span class="p">},</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="google" class="anchor" href="#google"><span class="octicon octicon-link"></span></a>Google</h3>
+
+<p>Google authentication (OpenID) will create <code>/auth</code>, <code>/auth/google</code>, &amp; <code>/auth/google/callback</code> routes. <code>auth(identifier, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"google"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
+        <span class="p">},</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="linkedin" class="anchor" href="#linkedin"><span class="octicon octicon-link"></span></a>LinkedIn</h3>
+
+<p>LinkedIn authentication will create <code>/auth</code>, <code>/auth/linkedin</code>, &amp; <code>/auth/linkedin/callback</code> routes. <code>auth(authCode, authToken, expiresIn, callback)</code> must execute <code>callback(err, user)</code>.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"linkedin"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
+            <span class="s2">"client_id"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from LinkedIn */</span>
+            <span class="s2">"client_secret"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from LinkedIn */</span><span class="p">,</span>
+            <span class="s2">"scope"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Optional, permission scope */</span>
         <span class="p">}</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="twitter" class="anchor" href="#twitter"><span class="octicon octicon-link"></span></a>Twitter</h3>
+
+<p>Twitter authentication will create <code>/auth</code>, <code>/auth/twitter</code>, &amp; <code>/auth/twitter/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"twitter"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
+            <span class="s2">"consumer_key"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from Twitter */</span>
+            <span class="s2">"consumer_secret"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Get this from Twitter */</span>
+        <span class="p">},</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
 <h3>
 <a name="oauth2-bearer-token" class="anchor" href="#oauth2-bearer-token"><span class="octicon octicon-link"></span></a>Oauth2 Bearer Token</h3>
-
-<p>The <code>protect</code> Array is the endpoints that will be protected by <code>OAuth2 Bearer Tokens</code>.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="p">{</span>
     <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
@@ -175,9 +240,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <h3>
 <a name="local" class="anchor" href="#local"><span class="octicon octicon-link"></span></a>Local</h3>
 
-<p>The <code>protect</code> Array is the endpoints that will be protected by <code>local</code> authentication. Do not protect <code>/</code>, as it'll block the authentication end points.</p>
-
-<p><code>local</code> authentication will rely on sessions, so SSL is required for production servers.</p>
+<p>Do not protect <code>/</code>, as it'll block the authentication end points. <code>local</code> authentication will rely on sessions, so SSL is required for production servers.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="p">{</span>
     <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
@@ -209,10 +272,28 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
                 <span class="k">else</span> <span class="p">{</span>
                     <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span> <span class="s2">"/login"</span> <span class="p">);</span>
                 <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s2">"login"</span><span class="o">:</span> <span class="s2">"/login"</span>
+            <span class="p">}</span>
         <span class="p">}</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/stuff"</span><span class="p">]</span>
+        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="sessions" class="anchor" href="#sessions"><span class="octicon octicon-link"></span></a>Sessions</h2>
+
+<p>Sessions can use a memory (default) or redis store. Memory will limit your sessions to a single server instance, while redis will allow you to share sessions across a cluster of processes, or machines. To use redis, set the <code>store</code> property to "redis".</p>
+
+<p>If the session <code>secret</code> is not provided, a version 4 <code>UUID</code> will be used.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span>
+    <span class="s2">"session"</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"secret"</span><span class="o">:</span> <span class="s2">"my secret"</span><span class="p">,</span>
+        <span class="s2">"store"</span><span class="o">:</span> <span class="s2">"redis"</span><span class="p">,</span>
+        <span class="s2">"redis"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"host"</span><span class="o">:</span> <span class="s2">"127.0.0.1"</span><span class="p">,</span>
+            <span class="s2">"port"</span><span class="o">:</span> <span class="mi">6379</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -254,22 +335,23 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <p>Standard log levels are supported, and are emitted (by configuration) to <code>stdout</code> &amp; <code>stderr</code>, &amp; <code>syslog</code>.</p>
 
 <h2>
-<a name="dtrace" class="anchor" href="#dtrace"><span class="octicon octicon-link"></span></a>Dtrace</h2>
+<a name="dtrace" class="anchor" href="#dtrace"><span class="octicon octicon-link"></span></a>DTrace</h2>
 
-<p>Dtrace probes can be enabled by configuration (disabled by default), and can be observed as <code>turtle-io</code>; Tensō is built on <a href="https://github.com/avoidwork/turtle.io">turtle.io</a>.</p>
+<p>DTrace probes can be enabled by configuration (disabled by default). A shell script is available at <code>./node_modules/turtle.io/dtrace.sh</code> to observe the probes.
+The last argument for each probe is the nanoseconds it took to execute.</p>
 
 <pre><code>"allowed",        "char *", "char *", "char *", "int"
 "allows",         "char *", "char *", "int"
 "compress",       "char *", "char *", "int"
 "compression",    "char *", "int"
-"error",          "char *", "char *", "int", "char *", "int"
-"headers",        "int", "int"
-"log",            "char *", "int", "int", "int"
+"error",          "char *", "char *", "int",    "char *", "int"
+"headers",        "int",    "int"
+"log",            "char *", "int",    "int",    "int"
 "proxy",          "char *", "char *", "char *", "char *", "int"
 "middleware",     "char *", "char *", "int"
 "request",        "char *", "int"
-"respond",        "char *", "char *", "char *", "int", "int"
-"status",         "int", "int", "int", "int", "int"
+"respond",        "char *", "char *", "char *", "int",    "int"
+"status",         "int",    "int",    "int",    "int",    "int"
 "write",          "char *", "char *", "char *", "char *", "int"
 </code></pre>
 
