@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -49,7 +48,7 @@
 
 <p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server.</p>
 
-<p>Route handlers have the context of the Tensō server, i.e. <code>this</code> will allow you to send a response with <code>this.respond( req, res, body[, status, headers] )</code>.</p>
+<p>Route handlers have the context of the Tensō server, i.e. <code>this</code> will allow you to send a response with <code>this.respond( req, res, body[, status, headers] )</code>. You can also use <code>res</code> to <code>respond(body[, status])</code>, <code>redirect(url)</code>, or <code>error(Error[, status])</code>. </p>
 
 <p>The following example will create GET routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
 
@@ -124,9 +123,14 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
     <span class="p">},</span>
     <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="cm">/* Optional, default is 8000 */</span>
     <span class="s2">"routes"</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span> <span class="cm">/* Required! */</span>
+    <span class="s2">"session"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
+        <span class="s2">"secret"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="s2">"store"</span><span class="o">:</span> <span class="s2">"memory"</span><span class="p">,</span> <span class="cm">/* "memory" or "redis" */</span>
+        <span class="s2">"redis"</span><span class="o">:</span> <span class="cm">/* See connect-redis for options */</span>
+    <span class="p">},</span>
     <span class="s2">"ssl"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
-        <span class="s2">"key"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="s2">"cert"</span><span class="o">:</span> <span class="kc">null</span>
+        <span class="s2">"cert"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="s2">"key"</span><span class="o">:</span> <span class="kc">null</span>
     <span class="p">},</span>
     <span class="s2">"uid"</span><span class="o">:</span> <span class="nx">N</span> <span class="cm">/* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */</span>
 <span class="p">}</span>
