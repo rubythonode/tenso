@@ -17,7 +17,6 @@
       <header>
         <h1>Tenso</h1>
         <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
 
         <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
 
@@ -87,7 +86,7 @@ The result will be in <code>data.result</code>.</p>
 <h2>
 <a name="rest--hypermedia" class="anchor" href="#rest--hypermedia"><span class="octicon octicon-link"></span></a>REST / Hypermedia</h2>
 
-<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richard Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
+<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
 relationships, and create the appropriate Objects in the <code>link</code> Array, as well as the <code>Link</code> HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered
 hypermedia links.</p>
 
