@@ -1,388 +1,42 @@
-<!doctype html>
+
+<!doctype>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Tenso by avoidwork</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Tenso</h1>
-        <p>Tensō is a REST API facade for node.js</p>
-        <p><pre>$ npm install tenso</pre></p>
-
-        <p class="view"><a href="https://github.com/avoidwork/tenso">View the Project on GitHub <small>avoidwork/tenso</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/avoidwork/tenso/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/avoidwork/tenso/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/avoidwork/tenso">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="tens%C5%8D" class="anchor" href="#tens%C5%8D"><span class="octicon octicon-link"></span></a>Tensō</h1>
-
-<p>Tensō is a REST API facade for node.js, designed to simplify the implementation of APIs.</p>
-
-<p>Tensō will handle the serialization &amp; creation of hypermedia links, all you have to do is give it <code>Arrays</code> or <code>Objects</code>.</p>
-
-<p><a href="http://travis-ci.org/avoidwork/tenso"><img src="https://secure.travis-ci.org/avoidwork/tenso.svg" alt="build status"></a></p>
-
-<h2>
-<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
-
-<p>Creating an API with Tensō can be as simple as one statement.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="nx">require</span><span class="p">(</span> <span class="s2">"tenso"</span> <span class="p">)(</span> <span class="p">{</span><span class="nx">routes</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s2">"/routes.js"</span> <span class="p">)}</span> <span class="p">);</span>
-</pre></div>
-
-<h3>
-<a name="creating-routes" class="anchor" href="#creating-routes"><span class="octicon octicon-link"></span></a>Creating Routes</h3>
-
-<p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server.</p>
-
-<p>Route handlers have the context of the Tensō server, i.e. <code>this</code> will allow you to send a response with <code>this.respond( req, res, body[, status, headers] )</code>. You can also use <code>res</code> to <code>respond(body[, status])</code>, <code>redirect(url)</code>, or <code>error(Error[, status])</code>. </p>
-
-<p>The following example will create GET routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">uuid</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"keigai"</span> <span class="p">).</span><span class="nx">util</span><span class="p">.</span><span class="nx">uuid</span><span class="p">;</span>
-
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">get</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"/"</span><span class="o">:</span> <span class="p">[],</span>
-    <span class="s2">"/reports/tps"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span> <span class="s2">"TPS Cover Sheet not attached"</span> <span class="p">),</span> <span class="mi">785</span> <span class="p">);</span>
-    <span class="p">},</span>
-    <span class="s2">"/uuid"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">uuid</span><span class="p">(),</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">"cache-control"</span><span class="o">:</span> <span class="s2">"no-cache"</span><span class="p">}</span> <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="request-helpers" class="anchor" href="#request-helpers"><span class="octicon octicon-link"></span></a>Request Helpers</h3>
-
-<p>Tensō decorates <code>req</code> with "helpers" such as <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using <code>local</code> authentication.</p>
-
-<h2>
-<a name="responses" class="anchor" href="#responses"><span class="octicon octicon-link"></span></a>Responses</h2>
-
-<p>Responses will have a standard shape, and will be utf-8 by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.
-The result will be in <code>data.result</code>.</p>
-
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">`{link:</span> <span class="err">[],</span> <span class="err">result:</span> <span class="err">?</span><span class="p">}</span><span class="err">`</span> <span class="p">}</span><span class="err">},</span>
-  <span class="s2">"error"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">`null`</span> <span class="err">or</span> <span class="err">an</span> <span class="err">`Error`</span> <span class="err">stack</span> <span class="err">trace</span> <span class="err">/</span> <span class="err">message</span> <span class="p">}</span><span class="err">},</span>
-  <span class="s2">"status"</span><span class="err">:</span> <span class="p">{</span><span class="err">{</span> <span class="err">HTTP</span> <span class="err">status</span> <span class="err">code</span> <span class="p">}</span><span class="err">}</span>
-<span class="err">}</span>
-</pre></div>
-
-<h2>
-<a name="rest--hypermedia" class="anchor" href="#rest--hypermedia"><span class="octicon octicon-link"></span></a>REST / Hypermedia</h2>
-
-<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
-relationships, and create the appropriate Objects in the <code>link</code> Array, as well as the <code>Link</code> HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered
-hypermedia links.</p>
-
-<p>For example, if the key <code>user_id</code> was found, it would be mapped to <code>/users/:id</code> with a link <code>rel</code> of <code>related</code>.</p>
-
-<p>Tensō will bend the rules of REST when using authentication strategies provided by passport.js, or CSRF if is enabled, because they rely on a session. Session storage is in memory, or Redis. You have the option of a stateless or stateful API.</p>
-
-<h2>
-<a name="cache" class="anchor" href="#cache"><span class="octicon octicon-link"></span></a>Cache</h2>
-
-<p>Tensō has a robust multi-level cache strategy, starting at the response headers. If a response can be cached, an <code>Etag</code> will be sent to the <code>Client</code>, and registered in an <code>Etag LRU cache</code> which Tensō 
-uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to stream the last known version of a resource to the next <code>Client</code> that supports the same compression (gzip or deflate).
-<code>Etags</code> will lazy expire from the cache, to minimize wasted cycles.</p>
-
-<p>Caching can be disabled by setting the <code>cache-control</code> header to a "private" or "no cache" directive (see the above <code>/uuid</code> example).</p>
-
-<h2>
-<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
-
-<p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="cm">/* Optional, see Authentication section */</span>
-    <span class="s2">"cache"</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="cm">/* Optional, size of Etag LRU cache */</span>
-    <span class="s2">"compress"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="cm">/* Optional, enabled by default, disabled with SSL */</span>
-    <span class="s2">"headers"</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Optional, custom headers */</span>
-    <span class="s2">"hostname"</span><span class="o">:</span> <span class="s2">"localhost"</span><span class="p">,</span> <span class="cm">/* Optional, default is 'localhost' */</span>
-    <span class="s2">"json"</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="cm">/* Optional, default indent for 'pretty' JSON */</span>
-    <span class="s2">"logs"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
-        <span class="s2">"level"</span><span class="o">:</span> <span class="s2">"info"</span><span class="p">,</span>
-        <span class="s2">"stdout"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="s2">"dtrace"</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="s2">"syslog"</span><span class="o">:</span> <span class="kc">false</span>
-    <span class="p">},</span>
-    <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="cm">/* Optional, default is 8000 */</span>
-    <span class="s2">"routes"</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">"./routes.js"</span> <span class="p">),</span> <span class="cm">/* Required! */</span>
-    <span class="s2">"session"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
-        <span class="s2">"secret"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="s2">"store"</span><span class="o">:</span> <span class="s2">"memory"</span><span class="p">,</span> <span class="cm">/* "memory" or "redis" */</span>
-        <span class="s2">"redis"</span><span class="o">:</span> <span class="cm">/* See connect-redis for options */</span>
-    <span class="p">},</span>
-    <span class="s2">"ssl"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* Optional */</span>
-        <span class="s2">"cert"</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-        <span class="s2">"key"</span><span class="o">:</span> <span class="kc">null</span>
-    <span class="p">},</span>
-    <span class="s2">"uid"</span><span class="o">:</span> <span class="nx">N</span> <span class="cm">/* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h2>
-
-<p>The <code>protect</code> Array is the endpoints that will require authentication. Sessions are used for non <code>Basic</code> or <code>Bearer Token</code> authentication, and will have <code>/login</code>, <code>/logout</code>, &amp; custom routes. Redis is supported for session storage.</p>
-
-<h3>
-<a name="basic-auth" class="anchor" href="#basic-auth"><span class="octicon octicon-link"></span></a>Basic Auth</h3>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"basic"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"list"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"username:password"</span><span class="p">,</span> <span class="p">...],</span>
-        <span class="p">},</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="facebook" class="anchor" href="#facebook"><span class="octicon octicon-link"></span></a>Facebook</h3>
-
-<p>Facebook authentication will create <code>/auth</code>, <code>/auth/facebook</code>, &amp; <code>/auth/facebook/callback</code> routes. <code>auth(accessToken, refreshToken, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"facebook"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
-            <span class="s2">"client_id"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from Facebook */</span>
-            <span class="s2">"client_secret"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Get this from Facebook */</span>
-        <span class="p">},</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="google" class="anchor" href="#google"><span class="octicon octicon-link"></span></a>Google</h3>
-
-<p>Google authentication (OpenID) will create <code>/auth</code>, <code>/auth/google</code>, &amp; <code>/auth/google/callback</code> routes. <code>auth(identifier, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"google"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
-        <span class="p">},</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="linkedin" class="anchor" href="#linkedin"><span class="octicon octicon-link"></span></a>LinkedIn</h3>
-
-<p>LinkedIn authentication will create <code>/auth</code>, <code>/auth/linkedin</code>, &amp; <code>/auth/linkedin/callback</code> routes. <code>auth(authCode, authToken, expiresIn, callback)</code> must execute <code>callback(err, user)</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"linkedin"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
-            <span class="s2">"client_id"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from LinkedIn */</span>
-            <span class="s2">"client_secret"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from LinkedIn */</span><span class="p">,</span>
-            <span class="s2">"scope"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Optional, permission scope */</span>
-        <span class="p">}</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="twitter" class="anchor" href="#twitter"><span class="octicon octicon-link"></span></a>Twitter</h3>
-
-<p>Twitter authentication will create <code>/auth</code>, <code>/auth/twitter</code>, &amp; <code>/auth/twitter/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"twitter"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="cm">/* Authentication handler, to 'find' or 'create' a User */</span>
-            <span class="s2">"consumer_key"</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span> <span class="cm">/* Get this from Twitter */</span>
-            <span class="s2">"consumer_secret"</span><span class="o">:</span> <span class="s2">""</span> <span class="cm">/* Get this from Twitter */</span>
-        <span class="p">},</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="oauth2-bearer-token" class="anchor" href="#oauth2-bearer-token"><span class="octicon octicon-link"></span></a>Oauth2 Bearer Token</h3>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"bearer"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"tokens"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"abc"</span><span class="p">,</span> <span class="p">...]</span>
-        <span class="p">},</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="local" class="anchor" href="#local"><span class="octicon octicon-link"></span></a>Local</h3>
-
-<p>Do not protect <code>/</code>, as it'll block the authentication end points. <code>local</code> authentication will rely on sessions, so SSL is required for production servers.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"auth"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"local"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="s2">"auth"</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span> <span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-                    <span class="p">}</span>
-                    <span class="k">else</span> <span class="p">{</span>
-                        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-                    <span class="p">}</span>
-
-                    <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
-                <span class="p">}</span>
-
-                <span class="k">if</span> <span class="p">(</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="s2">"/stuff"</span> <span class="p">);</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="s2">"Unauthorized"</span> <span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-            <span class="s2">"middleware"</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">authorized</span> <span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">next</span><span class="p">();</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span> <span class="s2">"/login"</span> <span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="s2">"protect"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"/private"</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="sessions" class="anchor" href="#sessions"><span class="octicon octicon-link"></span></a>Sessions</h2>
-
-<p>Sessions can use a memory (default) or redis store. Memory will limit your sessions to a single server instance, while redis will allow you to share sessions across a cluster of processes, or machines. To use redis, set the <code>store</code> property to "redis".</p>
-
-<p>If the session <code>secret</code> is not provided, a version 4 <code>UUID</code> will be used.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"session"</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"secret"</span><span class="o">:</span> <span class="s2">"my secret"</span><span class="p">,</span>
-        <span class="s2">"store"</span><span class="o">:</span> <span class="s2">"redis"</span><span class="p">,</span>
-        <span class="s2">"redis"</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">"host"</span><span class="o">:</span> <span class="s2">"127.0.0.1"</span><span class="p">,</span>
-            <span class="s2">"port"</span><span class="o">:</span> <span class="mi">6379</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="security" class="anchor" href="#security"><span class="octicon octicon-link"></span></a>Security</h2>
-
-<p>Tensō uses <a href="https://github.com/krakenjs/lusca#api">lusca</a> for security as a middleware. Please see it's documentation for how to configure it; each method &amp; argument is a key:value pair for <code>security</code>.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"security"</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="compression" class="anchor" href="#compression"><span class="octicon octicon-link"></span></a>Compression</h2>
-
-<p>Compression is enabled by default, for Clients that support <code>gzip</code> or <code>deflate</code>. Compression will be disabled if <code>SSL</code> is enabled.</p>
-
-<h2>
-<a name="rate-limiting" class="anchor" href="#rate-limiting"><span class="octicon octicon-link"></span></a>Rate Limiting</h2>
-
-<p>Rate limiting is controlled by configuration, and is disabled by default. Rate limiting is based on <code>token</code>, <code>session</code>, or <code>ip</code>, depending upon authentication method.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"rate"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">"enabled"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="s2">"limit"</span><span class="o">:</span> <span class="mi">450</span><span class="p">,</span> <span class="cm">/* Maximum requests allowed before `reset` */</span>
-        <span class="s2">"reset"</span><span class="o">:</span> <span class="mi">900</span><span class="p">,</span> <span class="cm">/* TTL in seconds */</span>
-        <span class="s2">"status"</span><span class="o">:</span> <span class="mi">429</span><span class="p">,</span> <span class="cm">/* Optional HTTP status */</span>
-        <span class="s2">"message"</span><span class="o">:</span> <span class="s2">"Too many requests"</span>  <span class="cm">/* Optional error message */</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="limiting-upload-size" class="anchor" href="#limiting-upload-size"><span class="octicon octicon-link"></span></a>Limiting upload size</h2>
-
-<p>A 'max byte' limit can be enforced on all routes that handle <code>PATCH</code>, <code>POST</code>, &amp; <code>PUT</code> requests. The default limit is 1 MB (1048576 b).</p>
-
-<div class="highlight highlight-javascript"><pre><span class="p">{</span>
-    <span class="s2">"maxBytes"</span><span class="o">:</span> <span class="mi">5242880</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2>
-<a name="logging" class="anchor" href="#logging"><span class="octicon octicon-link"></span></a>Logging</h2>
-
-<p>Standard log levels are supported, and are emitted (by configuration) to <code>stdout</code> &amp; <code>stderr</code>, &amp; <code>syslog</code>.</p>
-
-<h2>
-<a name="dtrace" class="anchor" href="#dtrace"><span class="octicon octicon-link"></span></a>DTrace</h2>
-
-<p>DTrace probes can be enabled by configuration (disabled by default). A shell script is available at <code>./node_modules/turtle.io/dtrace.sh</code> to observe the probes.
-The last argument for each probe is the nanoseconds it took to execute.</p>
-
-<pre><code>"allowed",        "char *", "char *", "char *", "int"
-"allows",         "char *", "char *", "int"
-"compress",       "char *", "char *", "int"
-"compression",    "char *", "int"
-"error",          "char *", "char *", "int",    "char *", "int"
-"headers",        "int",    "int"
-"log",            "char *", "int",    "int",    "int"
-"proxy",          "char *", "char *", "char *", "char *", "int"
-"middleware",     "char *", "char *", "int"
-"request",        "char *", "int"
-"respond",        "char *", "char *", "char *", "int",    "int"
-"status",         "int",    "int",    "int",    "int",    "int"
-"write",          "char *", "char *", "char *", "char *", "int"
-</code></pre>
-
-<h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>Copyright (c) 2014 Jason Mulligan<br>
-Licensed under the BSD-3 license.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/avoidwork">avoidwork</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>Tenso is a REST API facade for node.js</title>
+		<link rel="stylesheet" href="assets/css/style.css" media="print, screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<header>
+			<section>
+				<h1>Tensō</h1>
+				<h2>Tensō is a REST API facade for node.js</h2>
+				<nav>
+					<ul>
+						<li><a href="examples.html" title="View examples of using Tenso">Examples</a></li>
+						<li><a href="configuration.html" title="View configuration options">Configuration</a></li>
+						<li><a href="authentication.html" title="View authentication examples">Authentication</a></li>
+						<li><a href="rest.html" title="How Tenso conforms to REST">REST</a></li>
+						<li><a href="dtrace.html" title="DTrace details">DTrace</a></li>
+					</ul>
+				</nav>
+			</section>
+		</header>
+		<article>
+			<section>
+				<h1>$ npm install tenso</h1>
+				<h2>Creating an API with Tensō can be as simple as one statement</h2>
+				<p>require( "tenso" )( {routes: require( __dirname + "/routes.js" )} );</p>
+			</section>
+		</article>
+		<footer>
+			<p>This project is maintained by <a href="https://github.com/avoidwork">Jason Mulligan</a></p>
+		</footer>
+	</body>
 </html>
