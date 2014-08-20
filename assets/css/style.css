@@ -102,12 +102,6 @@ footer {
 
 div.gist {
 	width: 800px;
-	margin: 0 auto 0 auto;
-}
-
-.gist-syntax,
-.line-pre,
-.gist-meta,
-.line-numbers {
-	font-size: .8em !important;
+	margin: 50px auto 50px auto;
+	font-size: 12px !important;
 }

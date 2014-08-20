@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>Tenso Examples</title>
+		<link rel="stylesheet" href="assets/css/style.css" media="print, screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<header>
+			<section>
+				<h1><a href="./" title="Return to main">Tensō</a></h1>
+				<h2>Tensō is a REST API facade for node.js</h2>
+				<nav>
+					<ul>
+						<li><a href="examples.html" title="View examples of using Tenso">Examples</a></li>
+						<li><a href="configuration.html" title="View configuration options">Configuration</a></li>
+						<li><a href="authentication.html" title="View authentication examples">Authentication</a></li>
+						<li><a href="rest.html" title="How Tenso conforms to REST">REST</a></li>
+						<li><a href="dtrace.html" title="DTrace details">DTrace</a></li>
+					</ul>
+				</nav>
+			</section>
+		</header>
+		<article>
+			<section>
+				<h1>Creating Routes</h1>
+				<p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server.</p>
+				<p>Route handlers have the context of the Tensō server, i.e. this will allow you to send a response with this.respond( req, res, body[, status, headers] ). You can also use res to respond(body[, status]), redirect(url), or error(Error[, status]).</p>
+				<p>The following example will create GET routes that will return an empty Array at /, an Error at /reports/tps, &amp; a version 4 UUID at /uuid.</p>
+				<div><script src="https://gist.github.com/avoidwork/f9628d00d6d5438bd538.js"></script></div>
+
+				<h1>Helpers</h1>
+				<p>Tensō decorates req, &amp; res with "helpers" such as req.ip, &amp; req.parsed. PATCH, PUT, &amp; POST payloads are available as req.body. Sessions are available as req.session when using local authentication.</p>
+
+				<h1>Responses</h1>
+				<p>Responses will have a standard shape, and will be utf-8 by default. The result, and hypermedia will be in data. Hypermedia (pagination, links, etc.) will be in data.link, &amp; pagination will also be present via the Link HTTP header. The result will be in data.result.</p>
+				<div><script src="https://gist.github.com/avoidwork/2a30c234fbed83467ec4.js"></script></div>
+			</section>
+		</article>
+		<footer>
+			<p>This project is maintained by <a href="https://github.com/avoidwork">Jason Mulligan</a></p>
+		</footer>
+	</body>
+</html>
