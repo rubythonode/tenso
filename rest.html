@@ -30,8 +30,8 @@
 		<article>
 			<section>
 				<h1>REST / Hypermedia</h1>
-				<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html" title="Details of hypermedia">Richardson Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply relationships, and create the appropriate Objects in the link Array, as well as the Link HTTP header. Object keys that match this pattern: /_(guid|uuid|id|uri|url)$/ will be considered hypermedia links.</p>
-				<p>For example, if the key user_id was found, it would be mapped to /users/:id with a link rel of related.</p>
+				<p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html" title="Details of hypermedia">Richardson Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply relationships, and create the appropriate Objects in the link Array, as well as the Link HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered hypermedia links.</p>
+				<p>For example, if the key <code>user_id</code> was found, it would be mapped to <code>/users/:id</code> with a link rel of <code>related</code>.</p>
 				<p>Tensō will bend the rules of REST when using authentication strategies provided by passport.js, or CSRF if is enabled, because they rely on a session. Session storage is in memory, or Redis. You have the option of a stateless or stateful API.</p>
 
 				<h1>Cache</h1>

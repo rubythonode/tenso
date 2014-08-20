@@ -31,15 +31,15 @@
 			<section>
 				<h1>Creating Routes</h1>
 				<p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server.</p>
-				<p>Route handlers have the context of the Tensō server, i.e. this will allow you to send a response with this.respond( req, res, body[, status, headers] ). You can also use res to respond(body[, status]), redirect(url), or error(Error[, status]).</p>
-				<p>The following example will create GET routes that will return an empty Array at /, an Error at /reports/tps, &amp; a version 4 UUID at /uuid.</p>
+				<p>Route handlers have the context of the Tensō server, i.e. <code>this</code> will allow you to send a response with <code>this.respond( req, res, body[, status, headers] )</code>, and <code>this.error( req, res, Error[, status )</code>. You can also use <code>res</code> to <code>respond( body[, status] )</code>, <code>redirect( url )</code>, or <code>error( Error[, status] )</code>.</p>
+				<p>The following example will create <code>GET</code> routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/f9628d00d6d5438bd538.js"></script></div>
 
 				<h1>Helpers</h1>
-				<p>Tensō decorates req, &amp; res with "helpers" such as req.ip, &amp; req.parsed. PATCH, PUT, &amp; POST payloads are available as req.body. Sessions are available as req.session when using local authentication.</p>
+				<p>Tensō decorates <code>req</code>, &amp; <code>res</code> with "helpers" such as <code>req.allow</code>, <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using certain types of authentication.</p>
 
 				<h1>Responses</h1>
-				<p>Responses will have a standard shape, and will be utf-8 by default. The result, and hypermedia will be in data. Hypermedia (pagination, links, etc.) will be in data.link, &amp; pagination will also be present via the Link HTTP header. The result will be in data.result.</p>
+				<p>Responses will have a standard shape, and will be <code>utf-8</code> by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link</code>, &amp; pagination will also be present via the Link HTTP header. The result will be in <code>data.result</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/2a30c234fbed83467ec4.js"></script></div>
 
 				<p><strong>More coming soon!</strong></p>
