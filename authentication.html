@@ -29,7 +29,34 @@
 		</header>
 		<article>
 			<section>
-				<h1>Coming Soon</h1>
+				<h1>Authentication</h1>
+				<p>The protect Array is the endpoints that will require authentication. Sessions are used for non Basic or Bearer Token authentication, and will have /login, /logout, &amp; custom routes. Redis is supported for session storage.</p>
+
+				<h1>Basic Auth</h1>
+				<div><script src="https://gist.github.com/avoidwork/badd27fd666404f60a6b.js"></script></div>
+
+				<h1>Facebook</h1>
+				<p>Facebook authentication will create /auth, /auth/facebook, &amp; /auth/facebook/callback routes. auth(accessToken, refreshToken, profile, callback) must execute callback(err, user).</p>
+				<div><script src="https://gist.github.com/avoidwork/fbebb7871aca913ed69d.js"></script></div>
+
+				<h1>Google</h1>
+				<p>Google authentication (OpenID) will create /auth, /auth/google, & /auth/google/callback routes. auth(identifier, profile, callback) must execute callback(err, user).</p>
+				<div><script src="https://gist.github.com/avoidwork/71c6d23a4a35fe8e6ced.js"></script></div>
+
+				<h1>LinkedIn</h1>
+				<p>LinkedIn authentication will create /auth, /auth/linkedin, & /auth/linkedin/callback routes. auth(authCode, authToken, expiresIn, callback) must execute callback(err, user).</p>
+				<div><script src="https://gist.github.com/avoidwork/7f6c55d69259ac573b9e.js"></script></div>
+
+				<h1>Twitter</h1>
+				<p>Twitter authentication will create /auth, /auth/twitter, & /auth/twitter/callback routes. auth(token, tokenSecret, profile, callback) must execute callback(err, user).</p>
+				<div><script src="https://gist.github.com/avoidwork/5b5b34a377452ca9fc3c.js"></script></div>
+
+				<h1>Oauth2 Bearer Token</h1>
+				<div><script src="https://gist.github.com/avoidwork/f88e3dd6337888a231e9.js"></script></div>
+
+				<h1>Local</h1>
+				<p>Do not protect /, as it'll block the authentication end points. local authentication will rely on sessions, so SSL is required for production servers.</p>
+				<div><script src="https://gist.github.com/avoidwork/a8b5c7084ae6afa9a604.js"></script></div>
 			</section>
 		</article>
 		<footer>
