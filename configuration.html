@@ -29,7 +29,33 @@
 		</header>
 		<article>
 			<section>
-				<h1>Coming Soon</h1>
+				<h1>Configuration</h1>
+				<p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
+				<div><script src="https://gist.github.com/avoidwork/e5fb8ebdddb79d73a0b6.js"></script></div>
+
+				<h1>Compression</h1>
+				<p>Compression is enabled by default, for Clients that support gzip or deflate. Compression will be disabled if SSL is enabled.</p>
+
+				<h1>Limiting upload size</h1>
+				<p>A 'max byte' limit can be enforced on all routes that handle PATCH, POST, &amp; PUT requests. The default limit is 1 MB (1048576 b).</p>
+				<div><script src="https://gist.github.com/avoidwork/9d78a715102b09f8c58e.js"></script></div>
+
+				<h1>Logging</h1>
+				<p>Standard log levels are supported, and are emitted (by configuration) to stdout &amp; stderr, &amp; syslog.</p>
+				<div><script src="https://gist.github.com/avoidwork/6ca3ab8392560a9345ad.js"></script></div>
+
+				<h1>Rate Limiting</h1>
+				<p>Rate limiting is controlled by configuration, and is disabled by default. Rate limiting is based on token, session, or ip, depending upon authentication method.</p>
+				<div><script src="https://gist.github.com/avoidwork/4e66e0cf26a7ef504d92.js"></script></div>
+
+				<h1>Security</h1>
+				<p>Tensō uses lusca for security as a middleware. Please see it's documentation for how to configure it; each method &amp; argument is a key:value pair for security.</p>
+				<div><script src="https://gist.github.com/avoidwork/9b7889912d6a6367c384.js"></script></div>
+
+				<h1>Sessions</h1>
+				<p>Sessions can use a memory (default) or redis store. Memory will limit your sessions to a single server instance, while redis will allow you to share sessions across a cluster of processes, or machines. To use redis, set the store property to "redis".</p>
+				<p>If the session secret is not provided, a version 4 UUID will be used.</p>
+				<div><script src="https://gist.github.com/avoidwork/28704e2ad85228cc5841.js"></script></div>
 			</section>
 		</article>
 		<footer>
