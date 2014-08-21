@@ -47,7 +47,11 @@ header h1 {
 }
 
 header h1 a {
-	color: #000;
+	color: #00d1fb;
+}
+
+header h1 a:hover {
+	color: #777;
 }
 
 header h2 {

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
-		<title>Tenso Quick Start Guide</title>
+		<title>Tenso Quick Start</title>
 		<link rel="stylesheet" href="assets/css/style.css" media="print, screen">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -19,7 +19,7 @@
 				<nav>
 					<ul>
 						<li><a href="quickstart.html" title="How to get up and running quickly">Quick Start</a></li>
-						<li><a href="turtorials.html" title="Turtorials explaining how you can use Tenso">Tutorials</a></li>
+						<li><a href="tutorials.html" title="Turtorials explaining how you can use Tenso">Tutorials</a></li>
 						<li><a href="configuration.html" title="View configuration options">Configuration</a></li>
 						<li><a href="authentication.html" title="View authentication examples">Authentication</a></li>
 						<li><a href="rest.html" title="How Tenso conforms to REST">REST</a></li>
@@ -30,23 +30,24 @@
 		</header>
 		<article>
 			<section>
-				<h1>Quick Start Guide</h1>
+				<h1>Quick Start</h1>
 				<p>Tensō makes it very easy to create API facades. Routes should be loaded as a module, with each HTTP method as an export; this enforces a separation of concerns by convention. However, sometimes you want routes to be declared in your core application file, for access to lexical scope variables, such as the configuration Object.</p>
 				<p>Routes can have Booleans, Strings, Numbers, Arrays, &amp; Functions (referred to as 'handlers'). When a route doesn't have a handler, the value is automagically serialized and sent to the Client. Routes that have handlers need to only focus on their task(s), and eventually "respond" with a "result"; status code and custom HTTP headers are optional.</p>
 				<p>Route handlers have the context of the Tensō server, i.e. <code>this</code> will allow you to send a response with <code>this.respond(req, res, body[, status, headers])</code>, and <code>this.error(req, res, Error[, status])</code>. You can also use <code>res</code> to <code>res.respond(body[, status, headers])</code>, <code>res.redirect(url)</code>, or <code>res.error(Error[, status])</code>.</p>
 
 
-				<p>The following example will create <code>GET</code> routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
+				<p>The following example will create <code>GET</code> routes that will return an empty response at <code>/</code> with hypermedia links, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/f9628d00d6d5438bd538.js"></script></div>
-
-				<h1>Helpers</h1>
-				<p>Tensō decorates <code>req</code>, &amp; <code>res</code> with "helpers" such as <code>req.allow</code>, <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using certain types of authentication.</p>
 
 				<h1>Responses</h1>
 				<p>Responses will have a standard shape, and will be <code>utf-8</code> by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link</code>, &amp; pagination will also be present via the Link HTTP header. The result will be in <code>data.result</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/2a30c234fbed83467ec4.js"></script></div>
 
-				<p><strong>More coming soon!</strong></p>
+				<h1>Helpers</h1>
+				<p>Tensō decorates <code>req</code> with "helpers" such as <code>req.allow</code>, <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using certain types of authentication.</p>
+
+				<h1>Horizontal scaling</h1>
+				<p>An easy way to scale when using bearer tokens, local auth, or a social auth, is to use Redis for your token/session storage, and the cluster module or multiple servers.</p>
 			</section>
 		</article>
 		<footer>
