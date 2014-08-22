@@ -43,6 +43,9 @@
 				<p>Responses will have a standard shape, and will be <code>utf-8</code> by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link</code>, &amp; pagination will also be present via the Link HTTP header. The result will be in <code>data.result</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/2a30c234fbed83467ec4.js"></script></div>
 
+				The response from <code>/</code> would be the following.
+				<div><script src="https://gist.github.com/avoidwork/db4b42b6b939455b20c5.js"></script></div>
+
 				<h1>Helpers</h1>
 				<p>Tensō decorates <code>req</code> with "helpers" such as <code>req.allow</code>, <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using certain types of authentication.</p>
 
