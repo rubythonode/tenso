@@ -178,4 +178,8 @@ pre {
 	pre {
 		width: 400px;
 	}
+
+	.github {
+		display: none;
+	}
 }
