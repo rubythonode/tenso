@@ -37,7 +37,7 @@
 
 				<h1>Cache</h1>
 				<p>Tensō has a robust multi-level cache strategy, starting at the response headers. If a response can be cached, an Etag will be sent to the Client, and registered in an Etag LRU cache which Tensō uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to stream the last known version of a resource to the next Client that supports the same compression (gzip or deflate). Etags will lazy expire from the cache, to minimize wasted cycles.</p>
-				<p>Caching can be disabled by setting the cache-control header to a "private" or "no cache" directive (see the <a href="examples.html" title="View examples of using Tenso">examples</a>).</p>
+				<p>Caching can be disabled by setting the cache-control header to a "private" or "no cache" directive (see the <a href="quickstart.html" title="View example of using Tenso">quick start</a>).</p>
 			</section>
 		</article>
 		<footer>
