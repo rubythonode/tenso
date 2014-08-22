@@ -123,6 +123,10 @@ pre {
 	font-size: 12px !important;
 }
 
+#disqus_thread {
+	margin: 50px 0 50px 0;
+}
+
 @media (max-width: 1060px) {
 	header section,
 	article section {
