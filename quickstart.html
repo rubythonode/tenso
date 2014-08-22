@@ -39,8 +39,11 @@
 				<p>The following example will create <code>GET</code> routes that will return an empty response at <code>/</code> with hypermedia links, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/f9628d00d6d5438bd538.js"></script></div>
 
-				The response from <code>/</code> would be the following.
+				The response from <code>/</code> would be the following:
 				<div><script src="https://gist.github.com/avoidwork/db4b42b6b939455b20c5.js"></script></div>
+
+				The response from <code>/uuid</code> would be the following:
+				<div><script src="https://gist.github.com/avoidwork/30d81fe494f63203b7f3.js"></script></div>
 
 				<h1>Responses</h1>
 				<p>Responses will have a standard shape, and will be <code>utf-8</code> by default. The result, and hypermedia will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>data.link</code>, &amp; pagination will also be present via the Link HTTP header. The result will be in <code>data.result</code>.</p>
