@@ -145,6 +145,10 @@ pre {
 	pre {
 		width: 700px;
 	}
+
+	.github {
+		display: none;
+	}
 }
 
 @media (max-width: 800px) {
@@ -156,6 +160,10 @@ pre {
 	div.gist,
 	pre {
 		width: 600px;
+	}
+
+	.github {
+		display: none;
 	}
 }
 
