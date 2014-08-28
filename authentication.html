@@ -31,7 +31,9 @@
 		<article>
 			<section>
 				<h1>Authentication</h1>
-				<p>The protect Array is the endpoints that will require authentication. Sessions are used for non Basic or Bearer Token authentication, and will have <code>/login</code>, <code>/logout</code>, &amp; custom routes. Redis is supported for session storage.</p>
+				<p>The <code>protect</code> Array is the endpoints that will require authentication. The <code>redirect</code> String is the end point users will be redirected to upon successfully authenticating, the default is <code>/</code>.</p>
+				<p>Sessions are used for non Basic or Bearer Token authentication, and will have <code>/login</code>, <code>/logout</code>, &amp; custom routes. Redis is supported for session storage.</p>
+				<p>Multiple authentication strategies can be enabled at once.</p>
 
 				<h1>Basic Auth</h1>
 				<div><script src="https://gist.github.com/avoidwork/badd27fd666404f60a6b.js"></script></div>
@@ -45,19 +47,28 @@
 				<div><script src="https://gist.github.com/avoidwork/71c6d23a4a35fe8e6ced.js"></script></div>
 
 				<h1>LinkedIn</h1>
-				<p>LinkedIn authentication will create <code>/auth</code>, <code>/auth/linkedin</code>, &amp; <code>/auth/linkedin/callback</code> routes. <code>auth(authCode, authToken, expiresIn, callback)</code> must execute <code>callback(err, user)</code>.</p>
+				<p>LinkedIn authentication will create <code>/auth</code>, <code>/auth/linkedin</code>, &amp; <code>/auth/linkedin/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/7f6c55d69259ac573b9e.js"></script></div>
+
+				<h1>Local</h1>
+				<p>Do not protect <code>/</code>, as it'll block the authentication end points. Local authentication will rely on sessions, so SSL is required for production servers.</p>
+				<div><script src="https://gist.github.com/avoidwork/a8b5c7084ae6afa9a604.js"></script></div>
+
+				<h1>OAuth2</h1>
+				<p>OAuth2 authentication will create <code>/auth</code>, <code>/auth/oauth2</code>, &amp; <code>/auth/oauth2/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
+				<div><script src="https://gist.github.com/avoidwork/8b28ba7d9c017bc50d39.js"></script></div>
+
+				<h1>Oauth2 Bearer Token</h1>
+				<div><script src="https://gist.github.com/avoidwork/f88e3dd6337888a231e9.js"></script></div>
 
 				<h1>Twitter</h1>
 				<p>Twitter authentication will create <code>/auth</code>, <code>/auth/twitter</code>, &amp; <code>/auth/twitter/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 				<div><script src="https://gist.github.com/avoidwork/5b5b34a377452ca9fc3c.js"></script></div>
 
-				<h1>Oauth2 Bearer Token</h1>
-				<div><script src="https://gist.github.com/avoidwork/f88e3dd6337888a231e9.js"></script></div>
-
-				<h1>Local</h1>
-				<p>Do not protect <code>/</code>, as it'll block the authentication end points. Local authentication will rely on sessions, so SSL is required for production servers.</p>
-				<div><script src="https://gist.github.com/avoidwork/a8b5c7084ae6afa9a604.js"></script></div>
+				<h1>SAML</h1>
+				<p>SAML authentication will create <code>/auth</code>, <code>/auth/saml</code>, &amp; <code>/auth/saml/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
+				<p>Tensō uses <a href="https://github.com/bergie/passport-saml" title="GitHub page for passport-saml">passport-saml</a>, for configuration options please visit it's homepage.</p>
+				<div><script src="https://gist.github.com/avoidwork/c91177af5ec8eb1394c6.js"></script></div>
 			</section>
 			<section>
 				<div id="disqus_thread"></div>
