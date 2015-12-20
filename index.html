@@ -5,7 +5,7 @@
     <title>Tenso by avoidwork</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -24,7 +24,7 @@
 
 <p><a href="http://travis-ci.org/avoidwork/tenso"><img src="https://secure.travis-ci.org/avoidwork/tenso.svg" alt="build status"></a> <a href="https://gitter.im/avoidwork/tenso?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a></p>
 
-<p>Tensō is a REST API facade for node.js, designed to simplify the implementation of APIs.</p>
+<p>Tensō is a REST API gateway for node.js, designed to simplify the implementation of APIs.</p>
 
 <p>Tensō will handle the serialization &amp; creation of hypermedia links, all you have to do is give it <code>Arrays</code> or <code>Objects</code>.</p>
 
@@ -33,7 +33,7 @@
 
 <p>Creating an API with Tensō can be as simple as one statement.</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>tenso<span class="pl-pds">"</span></span>)({routes<span class="pl-k">:</span> <span class="pl-c1">require</span>(<span class="pl-c1">__dirname</span><span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span>/routes.js<span class="pl-pds">"</span></span>)});</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>tenso<span class="pl-pds">"</span></span>)({routes<span class="pl-k">:</span> <span class="pl-c1">require</span>(<span class="pl-c1">__dirname</span><span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span>/routes.js<span class="pl-pds">"</span></span>)});</pre></div>
 
 <h3>
 <a id="creating-routes" class="anchor" href="#creating-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Routes</h3>
@@ -44,16 +44,16 @@
 
 <p>The following example will create GET routes that will return an empty <code>Array</code> at <code>/</code>, an <code>Error</code> at <code>/reports/tps</code>, &amp; a version 4 UUID at <code>/uuid</code>.</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> uuid <span class="pl-k">=</span> <span class="pl-c1">require</span>( <span class="pl-s"><span class="pl-pds">"</span>keigai<span class="pl-pds">"</span></span> ).util.uuid;
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> uuid <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>tiny-uuid4<span class="pl-pds">"</span></span>);
 
-<span class="pl-c1">module</span>.exports.get <span class="pl-k">=</span> {
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span>.<span class="pl-smi">get</span> <span class="pl-k">=</span> {
     <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span><span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>reports<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>uuid<span class="pl-pds">"</span></span>],
     <span class="pl-s"><span class="pl-pds">"</span>/reports<span class="pl-pds">"</span></span><span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>tps<span class="pl-pds">"</span></span>],
-    <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/reports/tps</span><span class="pl-pds">"</span></span>: <span class="pl-k">function</span> ( <span class="pl-smi">req</span>, <span class="pl-smi">res</span> ) {
-        res<span class="pl-c1">.error</span>( <span class="pl-c1">785</span>, Error( <span class="pl-s"><span class="pl-pds">"</span>TPS Cover Sheet not attached<span class="pl-pds">"</span></span> ) );
+    <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/reports/tps</span><span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+        <span class="pl-smi">res</span>.<span class="pl-c1">error</span>(<span class="pl-c1">785</span>, <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">"</span>TPS Cover Sheet not attached<span class="pl-pds">"</span></span>));
     },
-    <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/uuid</span><span class="pl-pds">"</span></span>: <span class="pl-k">function</span> ( <span class="pl-smi">req</span>, <span class="pl-smi">res</span> ) {
-        res.respond( uuid(), <span class="pl-c1">200</span>, {<span class="pl-s"><span class="pl-pds">"</span>cache-control<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>no-cache<span class="pl-pds">"</span></span>} );
+    <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/uuid</span><span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
+        <span class="pl-smi">res</span>.<span class="pl-c1">send</span>(<span class="pl-en">uuid</span>(), <span class="pl-c1">200</span>, {<span class="pl-s"><span class="pl-pds">"</span>cache-control<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>no-cache<span class="pl-pds">"</span></span>});
     }
 };</pre></div>
 
@@ -77,7 +77,7 @@
 
 <p>Responses will have a standard shape, and will be utf-8 by default. The result will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>links:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.</p>
 
-<div class="highlight highlight-json"><pre>{
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>`null` or ?<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>`null` or an `Error` stack trace / message<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>links<span class="pl-pds">"</span></span>: [],
@@ -382,7 +382,6 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 The last argument for each probe is the nanoseconds it took to execute.</p>
 
 <pre><code>"allowed",        "char *", "char *", "char *", "int"
-"allows",         "char *", "char *", "int"
 "compress",       "char *", "char *", "int"
 "compression",    "char *", "int"
 "error",          "char *", "char *", "int",    "char *", "int"
@@ -413,4 +412,3 @@ Licensed under the BSD-3 license.</p>
   
   </body>
 </html>
-
