@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="tensō" class="anchor" href="#tens%C5%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tensō</h1>
+<a id="tensō" class="anchor" href="#tens%C5%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tensō</h1>
 
 <p><a href="http://travis-ci.org/avoidwork/tenso"><img src="https://secure.travis-ci.org/avoidwork/tenso.svg" alt="build status"></a> <a href="https://gitter.im/avoidwork/tenso?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a></p>
 
@@ -29,14 +29,14 @@
 <p>Tensō will handle the serialization &amp; creation of hypermedia links, all you have to do is give it <code>Arrays</code> or <code>Objects</code>.</p>
 
 <h2>
-<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h2>
 
 <p>Creating an API with Tensō can be as simple as one statement.</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>tenso<span class="pl-pds">"</span></span>)({routes<span class="pl-k">:</span> <span class="pl-c1">require</span>(<span class="pl-c1">__dirname</span><span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span>/routes.js<span class="pl-pds">"</span></span>)});</pre></div>
 
 <h3>
-<a id="creating-routes" class="anchor" href="#creating-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Routes</h3>
+<a id="creating-routes" class="anchor" href="#creating-routes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating Routes</h3>
 
 <p>Routes are loaded as a module, with each HTTP method as an export, affording a very customizable API server.</p>
 
@@ -46,11 +46,11 @@
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> uuid <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>tiny-uuid4<span class="pl-pds">"</span></span>);
 
-<span class="pl-smi">module</span>.<span class="pl-smi">exports</span>.<span class="pl-smi">get</span> <span class="pl-k">=</span> {
+<span class="pl-c1">module</span>.<span class="pl-smi">exports</span>.<span class="pl-smi">get</span> <span class="pl-k">=</span> {
     <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span><span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>reports<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>uuid<span class="pl-pds">"</span></span>],
     <span class="pl-s"><span class="pl-pds">"</span>/reports<span class="pl-pds">"</span></span><span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>tps<span class="pl-pds">"</span></span>],
     <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/reports/tps</span><span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
-        <span class="pl-smi">res</span>.<span class="pl-c1">error</span>(<span class="pl-c1">785</span>, <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">"</span>TPS Cover Sheet not attached<span class="pl-pds">"</span></span>));
+        <span class="pl-smi">res</span>.<span class="pl-en">error</span>(<span class="pl-c1">785</span>, <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">"</span>TPS Cover Sheet not attached<span class="pl-pds">"</span></span>));
     },
     <span class="pl-s"><span class="pl-pds">"</span><span class="pl-en">/uuid</span><span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) {
         <span class="pl-smi">res</span>.<span class="pl-c1">send</span>(<span class="pl-en">uuid</span>(), <span class="pl-c1">200</span>, {<span class="pl-s"><span class="pl-pds">"</span>cache-control<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>no-cache<span class="pl-pds">"</span></span>});
@@ -58,22 +58,22 @@
 };</pre></div>
 
 <h4>
-<a id="protected-routes" class="anchor" href="#protected-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Protected Routes</h4>
+<a id="protected-routes" class="anchor" href="#protected-routes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Protected Routes</h4>
 
 <p>Protected routes are routes that require authorization for access, and will redirect to authentication end points if needed.</p>
 
 <h4>
-<a id="unprotected-routes" class="anchor" href="#unprotected-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unprotected Routes</h4>
+<a id="unprotected-routes" class="anchor" href="#unprotected-routes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unprotected Routes</h4>
 
 <p>Unprotected routes are routes that do not require authorization for access, and will exit the authorization pipeline early to avoid rate limiting, csrf tokens, &amp; other security measures. These routes are the DMZ of your API! <em>You</em> <strong>must</strong> secure these end points with alternative methods if accepting input!</p>
 
 <h3>
-<a id="request-helpers" class="anchor" href="#request-helpers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Request Helpers</h3>
+<a id="request-helpers" class="anchor" href="#request-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Request Helpers</h3>
 
 <p>Tensō decorates <code>req</code> with "helpers" such as <code>req.ip</code>, &amp; <code>req.parsed</code>. <code>PATCH</code>, <code>PUT</code>, &amp; <code>POST</code> payloads are available as <code>req.body</code>. Sessions are available as <code>req.session</code> when using <code>local</code> authentication.</p>
 
 <h2>
-<a id="responses" class="anchor" href="#responses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Responses</h2>
+<a id="responses" class="anchor" href="#responses" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Responses</h2>
 
 <p>Responses will have a standard shape, and will be utf-8 by default. The result will be in <code>data</code>. Hypermedia (pagination, links, etc.) will be in <code>links:[ {"uri": "...", "rel": "..."}, ...]</code>, &amp; pagination will also be present via the <code>Link</code> HTTP header.</p>
 
@@ -85,7 +85,7 @@
 }</pre></div>
 
 <h2>
-<a id="rest--hypermedia" class="anchor" href="#rest--hypermedia" aria-hidden="true"><span class="octicon octicon-link"></span></a>REST / Hypermedia</h2>
+<a id="rest--hypermedia" class="anchor" href="#rest--hypermedia" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>REST / Hypermedia</h2>
 
 <p>Hypermedia is a prerequisite of REST, and is best described by the <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model</a>. Tensō will automagically paginate Arrays of results, or parse Entity representations for keys that imply
 relationships, and create the appropriate Objects in the <code>link</code> Array, as well as the <code>Link</code> HTTP header. Object keys that match this pattern: <code>/_(guid|uuid|id|uri|url)$/</code> will be considered
@@ -96,14 +96,14 @@ hypermedia links.</p>
 <p>Tensō will bend the rules of REST when using authentication strategies provided by passport.js, or CSRF if is enabled, because they rely on a session. Session storage is in memory, or Redis. You have the option of a stateless or stateful API.</p>
 
 <h2>
-<a id="browsable-api--renderers" class="anchor" href="#browsable-api--renderers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browsable API / Renderers</h2>
+<a id="browsable-api--renderers" class="anchor" href="#browsable-api--renderers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Browsable API / Renderers</h2>
 
 <p>Tensō 1.4.0 added a few common format renderers, such as CSV, HTML, YAML, &amp; XML. The HTML interface is a browsable API! You can use it to verify requests &amp; responses, or simply poke around your API to see how it behaves.</p>
 
 <p>Custom renderers can be registered with <code>server.renderer('name', fn, 'mimetype');</code>.</p>
 
 <h2>
-<a id="cache" class="anchor" href="#cache" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cache</h2>
+<a id="cache" class="anchor" href="#cache" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cache</h2>
 
 <p>Tensō has a robust multi-level cache strategy, starting at the response headers. If a response can be cached, an <code>Etag</code> will be sent to the <code>Client</code>, and registered in an <code>Etag LRU cache</code> which Tensō 
 uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to stream the last known version of a resource to the next <code>Client</code> that supports the same compression (gzip or deflate).
@@ -112,21 +112,20 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <p>Caching can be disabled by setting the <code>cache-control</code> header to a "private" or "no cache" directive (see the above <code>/uuid</code> example).</p>
 
 <h2>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
 
 <p>This is a sample configuration for Tensō, without authentication or SSL. This would be ideal for development, but not production! Enabling SSL is as easy as providing file paths for the two keys.</p>
 
 <pre><code>{
     "auth": {}, /* Optional, see Authentication section */
-    "cache": 1000, /* Optional, size of Etag LRU cache */
-    "compress": false, /* Optional, enabled by default, disabled with SSL */
+    "cacheSize": 1000, /* Optional, size of Etag LRU cache */
+    "compress": false, /* Optional, enabled by default */
     "headers": {}, /* Optional, custom headers */
     "hostname": "localhost", /* Optional, default is 'localhost' */
     "json": 2, /* Optional, default indent for 'pretty' JSON */
-    "logs": {
+    "logging": {
         "level": "info", /* Optional */
-        "stdout": true, /* Optional */
-        "dtrace": false, /* Optional */
+        "enabled": true, /* Optional */
         "stack": true /* Optional */
     },
     "port": 8000, /* Optional */
@@ -146,7 +145,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication</h2>
+<a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authentication</h2>
 
 <p>The <code>protect</code> Array is the endpoints that will require authentication. The <code>redirect</code> String is the end point users will be redirected to upon successfully authenticating, the default is <code>/</code>.</p>
 
@@ -155,7 +154,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <p>Multiple authentication strategies can be enabled at once.</p>
 
 <h3>
-<a id="basic-auth" class="anchor" href="#basic-auth" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Auth</h3>
+<a id="basic-auth" class="anchor" href="#basic-auth" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Auth</h3>
 
 <pre><code>{
     "auth": {
@@ -169,7 +168,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="facebook" class="anchor" href="#facebook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Facebook</h3>
+<a id="facebook" class="anchor" href="#facebook" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Facebook</h3>
 
 <p>Facebook authentication will create <code>/auth</code>, <code>/auth/facebook</code>, &amp; <code>/auth/facebook/callback</code> routes. <code>auth(accessToken, refreshToken, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -187,7 +186,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="google" class="anchor" href="#google" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google</h3>
+<a id="google" class="anchor" href="#google" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Google</h3>
 
 <p>Google authentication (OpenID) will create <code>/auth</code>, <code>/auth/google</code>, &amp; <code>/auth/google/callback</code> routes. <code>auth(identifier, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -203,7 +202,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="linkedin" class="anchor" href="#linkedin" aria-hidden="true"><span class="octicon octicon-link"></span></a>LinkedIn</h3>
+<a id="linkedin" class="anchor" href="#linkedin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LinkedIn</h3>
 
 <p>LinkedIn authentication will create <code>/auth</code>, <code>/auth/linkedin</code>, &amp; <code>/auth/linkedin/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -222,7 +221,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="local" class="anchor" href="#local" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local</h3>
+<a id="local" class="anchor" href="#local" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Local</h3>
 
 <p>Local authentication will create <code>/login</code>. <code>auth(username, password)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -238,7 +237,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="oauth2" class="anchor" href="#oauth2" aria-hidden="true"><span class="octicon octicon-link"></span></a>OAuth2</h3>
+<a id="oauth2" class="anchor" href="#oauth2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OAuth2</h3>
 
 <p>OAuth2 authentication will create <code>/auth</code>, <code>/auth/oauth2</code>, &amp; <code>/auth/oauth2/callback</code> routes. <code>auth(accessToken, refreshToken, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -258,7 +257,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="oauth2-bearer-token" class="anchor" href="#oauth2-bearer-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Oauth2 Bearer Token</h3>
+<a id="oauth2-bearer-token" class="anchor" href="#oauth2-bearer-token" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oauth2 Bearer Token</h3>
 
 <pre><code>{
     "auth": {
@@ -272,7 +271,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="saml" class="anchor" href="#saml" aria-hidden="true"><span class="octicon octicon-link"></span></a>SAML</h3>
+<a id="saml" class="anchor" href="#saml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SAML</h3>
 
 <p>SAML authentication will create <code>/auth</code>, <code>/auth/saml</code>, &amp; <code>/auth/saml/callback</code> routes. <code>auth(profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -290,7 +289,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h3>
-<a id="twitter" class="anchor" href="#twitter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Twitter</h3>
+<a id="twitter" class="anchor" href="#twitter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Twitter</h3>
 
 <p>Twitter authentication will create <code>/auth</code>, <code>/auth/twitter</code>, &amp; <code>/auth/twitter/callback</code> routes. <code>auth(token, tokenSecret, profile, callback)</code> must execute <code>callback(err, user)</code>.</p>
 
@@ -308,7 +307,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="sessions" class="anchor" href="#sessions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sessions</h2>
+<a id="sessions" class="anchor" href="#sessions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sessions</h2>
 
 <p>Sessions can use a memory (default) or redis store. Memory will limit your sessions to a single server instance, while redis will allow you to share sessions across a cluster of processes, or machines. To use redis, set the <code>store</code> property to "redis".</p>
 
@@ -327,7 +326,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="security" class="anchor" href="#security" aria-hidden="true"><span class="octicon octicon-link"></span></a>Security</h2>
+<a id="security" class="anchor" href="#security" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Security</h2>
 
 <p>Tensō uses <a href="https://github.com/krakenjs/lusca#api">lusca</a> for security as a middleware. Please see it's documentation for how to configure it; each method &amp; argument is a key:value pair for <code>security</code>.</p>
 
@@ -337,12 +336,12 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="compression" class="anchor" href="#compression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compression</h2>
+<a id="compression" class="anchor" href="#compression" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compression</h2>
 
 <p>Compression is enabled by default, for Clients that support <code>gzip</code> or <code>deflate</code>. Compression will be disabled if <code>SSL</code> is enabled.</p>
 
 <h2>
-<a id="rate-limiting" class="anchor" href="#rate-limiting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rate Limiting</h2>
+<a id="rate-limiting" class="anchor" href="#rate-limiting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rate Limiting</h2>
 
 <p>Rate limiting is controlled by configuration, and is disabled by default. Rate limiting is based on <code>token</code>, <code>session</code>, or <code>ip</code>, depending upon authentication method.</p>
 
@@ -361,7 +360,7 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="limiting-upload-size" class="anchor" href="#limiting-upload-size" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limiting upload size</h2>
+<a id="limiting-upload-size" class="anchor" href="#limiting-upload-size" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Limiting upload size</h2>
 
 <p>A 'max byte' limit can be enforced on all routes that handle <code>PATCH</code>, <code>POST</code>, &amp; <code>PUT</code> requests. The default limit is 1 MB (1048576 b).</p>
 
@@ -371,32 +370,12 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
-<a id="logging" class="anchor" href="#logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging</h2>
+<a id="logging" class="anchor" href="#logging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging</h2>
 
 <p>Standard log levels are supported, and are emitted (by configuration) to <code>stdout</code> &amp; <code>stderr</code>. Stack traces can be enabled.</p>
 
 <h2>
-<a id="dtrace" class="anchor" href="#dtrace" aria-hidden="true"><span class="octicon octicon-link"></span></a>DTrace</h2>
-
-<p>DTrace probes can be enabled by configuration (disabled by default). A shell script is available at <code>./dtrace.sh</code> to observe the probes.
-The last argument for each probe is the nanoseconds it took to execute.</p>
-
-<pre><code>"allowed",        "char *", "char *", "char *", "int"
-"compress",       "char *", "char *", "int"
-"compression",    "char *", "int"
-"error",          "char *", "char *", "int",    "char *", "int"
-"headers",        "int",    "int"
-"log",            "char *", "int",    "int",    "int"
-"proxy",          "char *", "char *", "char *", "char *", "int"
-"middleware",     "char *", "char *", "int"
-"request",        "char *", "int"
-"respond",        "char *", "char *", "char *", "int",    "int"
-"status",         "int",    "int",    "int",    "int",    "int"
-"write",          "char *", "char *", "char *", "char *", "int"
-</code></pre>
-
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>Copyright (c) 2015 Jason Mulligan<br>
 Licensed under the BSD-3 license.</p>
