@@ -403,6 +403,22 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 </code></pre>
 
 <h2>
+<a id="coap" class="anchor" href="#coap" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>COAP</h2>
+
+<p>A companion COAP server can be enabled by configuration, with a <code>request</code> event handler set as a <code>coap</code> route.</p>
+
+<p>Parameters for <code>request</code> are <code>req, res, server, tenso</code>.</p>
+
+<p>Server details can be found <a href="https://github.com/mcollina/node-coap#createserveroptions-requestlistener">here</a></p>
+
+<pre><code>{
+    "coap": {
+        "enabled": true
+    }
+}
+</code></pre>
+
+<h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>Copyright (c) 2016 Jason Mulligan<br>
