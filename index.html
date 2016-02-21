@@ -372,7 +372,35 @@ uses along with a 'cache compressed asset to disk' strategy, allowing Tensō to 
 <h2>
 <a id="logging" class="anchor" href="#logging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging</h2>
 
-<p>Standard log levels are supported, and are emitted (by configuration) to <code>stdout</code> &amp; <code>stderr</code>. Stack traces can be enabled.</p>
+<p>Standard log levels are supported, and are emitted to <code>stdout</code> &amp; <code>stderr</code>. Stack traces can be enabled.</p>
+
+<pre><code>{
+    "logging": {
+        "level": "warn",
+        "enabled": true,
+        "stack": true
+    }
+}
+</code></pre>
+
+<h2>
+<a id="websocket" class="anchor" href="#websocket" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebSocket</h2>
+
+<p>A companion WebSocket server can be enabled by configuration, with event handlers (<code>connection</code>, <code>message</code>, &amp; <code>close</code>) set as a <code>socket</code> route.</p>
+
+<p>Parameters for <code>message</code> are <code>socket, message, binary, server, tenso</code>, and <code>socket, server, tenso</code> for <code>connection</code> &amp; <code>close</code>.</p>
+
+<p>Server options can be found <a href="https://github.com/alexhultman/node-lws#new-lwsserveroptions">here</a></p>
+
+<pre><code>{
+    "websocket": {
+        "enabled": true,
+        "options": {
+            "port": 3000
+        }
+    }
+}
+</code></pre>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
