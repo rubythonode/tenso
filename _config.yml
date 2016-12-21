@@ -1,0 +1,8 @@
+title: Tenso
+description: Tensō is an elastic REST API gateway for node.js
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
